@@ -13,13 +13,15 @@ namespace ConsoleApp1
 {
     class Program
     {
-
+        
 
         static void Main(string[] args)
         {
             //JArray releases = new JArray();
             Release myReleases = new Release();
-            
+            int i = 0;
+            //IRestResponse<List<Release> response = new IRestResponse<List<Release>();
+
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
@@ -37,6 +39,12 @@ namespace ConsoleApp1
 
                 var releases = response.Data;
                 //releases = JArray.Parse(response.Content);
+                foreach (var release in releases)
+                {
+                    Console.WriteLine(release.Absence_Type);
+                    i++;
+                }
+                Console.WriteLine(i);
                 Console.ReadLine();
             }
         }
