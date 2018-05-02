@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RestSharp;
+using RestSharp.Deserializers;
 
 namespace ConsoleApp1
 {
@@ -16,8 +17,9 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            JArray releases = new JArray();
-
+            //JArray releases = new JArray();
+            Release myReleases = new Release();
+            
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
@@ -31,10 +33,14 @@ namespace ConsoleApp1
                 var client = new RestClient(url);
 
                 //var response = httpClient.GetStringAsync(new Uri(url)).Result;
-                IRestResponse response = client.Execute(new RestRequest());
+                var response = client.Execute<List<Release>>(new RestRequest());
 
-                releases = JArray.Parse(response.Content);
+                var releases = response.Data;
+                //releases = JArray.Parse(response.Content);
+                Console.ReadLine();
             }
+        }
+        
 
 
             //foreach (var release in releases)
@@ -42,17 +48,21 @@ namespace ConsoleApp1
             //    Console.WriteLine(release.Root.ToList());
 
 
-                
+
             //}
 
-            foreach(var newrelease in releases.ToList())
-            {
-                Console.WriteLine(newrelease);
-                Console.ReadLine();
-            }
-
-
+        public class Release
+        {
+            [DeserializeAs(Name = "Gender")]
+            public string Gender { get; set; }
+            [DeserializeAs(Name = "Absence_Type")]
+            public string Absence_Type { get; set; }
+            [DeserializeAs(Name = "Employee_Type")]
+            public string Employee_Type { get; set; }
         }
+
+
+    }
 
         public class RestSharpGet {
 
@@ -65,4 +75,4 @@ namespace ConsoleApp1
 
             }
     }
-}
+
