@@ -41,8 +41,11 @@ namespace ConsoleApp1
                 //releases = JArray.Parse(response.Content);
                 foreach (var release in releases)
                 {
-                    Console.WriteLine(release.Absence_Type);
-                    i++;
+                    if (release.Absence_Type_Category == "Sick_Unpaid") {
+                        Console.WriteLine(release.Absence_Type);
+                        Console.WriteLine(release.Employee_Type);
+                        i++;
+                    }
                 }
                 Console.WriteLine(i);
                 Console.ReadLine();
@@ -67,6 +70,8 @@ namespace ConsoleApp1
             public string Absence_Type { get; set; }
             [DeserializeAs(Name = "Employee_Type")]
             public string Employee_Type { get; set; }
+            [DeserializeAs(Name = "Absence_Type_Category")]
+            public string Absence_Type_Category { get; set; }
         }
 
 
