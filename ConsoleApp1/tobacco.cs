@@ -47,6 +47,11 @@ namespace ConsoleApp1
                         Console.WriteLine(release.RESPONSE);
                         i++;
                     }
+                    if (release.RESPONSE == "Probably")
+                    {
+                        Console.WriteLine(release.RESPONSE);
+                        i++;
+                    }
                 }
                 Console.WriteLine(i);
                 Console.ReadLine();
