@@ -18,8 +18,10 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             //JArray releases = new JArray();
-            Release myReleases = new Release();
+            abRelease myReleases = new abRelease();
             int i = 0;
+            Tobacco tobacco = new Tobacco();
+            List<Tobacco.toRelease> tobaccoHolder = new List<Tobacco.toRelease>();
             //IRestResponse<List<Release> response = new IRestResponse<List<Release>();
 
             using (var httpClient = new HttpClient())
@@ -35,7 +37,7 @@ namespace ConsoleApp1
                 var client = new RestClient(url);
 
                 //var response = httpClient.GetStringAsync(new Uri(url)).Result;
-                var response = client.Execute<List<Release>>(new RestRequest());
+                var response = client.Execute<List<abRelease>>(new RestRequest());
 
                 var releases = response.Data;
                 //releases = JArray.Parse(response.Content);
@@ -48,8 +50,11 @@ namespace ConsoleApp1
                     }
                 }
                 Console.WriteLine(i);
-                Console.ReadLine();
+                
             }
+
+            tobaccoHolder = tobacco.getJSON();
+            Console.ReadLine();
         }
         
 
@@ -62,7 +67,7 @@ namespace ConsoleApp1
 
             //}
 
-        public class Release
+        public class abRelease
         {
             [DeserializeAs(Name = "Gender")]
             public string Gender { get; set; }
