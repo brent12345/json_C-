@@ -44,8 +44,7 @@ namespace ConsoleApp1
                 foreach (var release in releases)
                 {
                     if (release.Absence_Type_Category == "Sick_Unpaid") {
-                        Console.WriteLine(release.Absence_Type);
-                        Console.WriteLine(release.Employee_Type);
+                        
                         i++;
                     }
                 }

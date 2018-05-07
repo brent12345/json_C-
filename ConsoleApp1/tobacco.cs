@@ -13,13 +13,20 @@ namespace ConsoleApp1
 {
     class Tobacco
     {
-
+        string x = new StringBuilder(@"TABLE AD10: Do you currently smoke tobacco cigarettes?").ToString(); 
+        private const string V1 = @"TABLE AD8: Please indicate whether you would definitely, probably, probably not, or definitely not consider purchasing tobacco or cigarettes from an unlicensed dealer, that is, where the tobacco has not been properly taxed?";
 
         public List<toRelease> getJSON()
         {
             //JArray releases = new JArray();
             toRelease myReleases = new toRelease();
-            int i = 0;
+            int definitely = 0;
+            int probably = 0;
+            int definitely_not = 0;
+            int lines = 0;
+            int Probably_not = 0;
+            int smoker = 0;
+            int nonSmoker = 0;
             List<toRelease> releases = new List<toRelease>();
             //IRestResponse<List<Release> response = new IRestResponse<List<Release>();
 
@@ -42,19 +49,65 @@ namespace ConsoleApp1
                 //releases = JArray.Parse(response.Content);
                 foreach (var release in releases)
                 {
-                    if (release.RESPONSE == "Definitely")
+                    if (release.TABLE == V1)
                     {
-                        Console.WriteLine(release.RESPONSE);
-                        i++;
+
+                        if (release.RESPONSE == "Definitely")
+                        {
+                            Console.WriteLine(release.RESPONSE);
+                            definitely++;
+                        }
+                        if (release.RESPONSE == "Probably")
+                        {
+                            Console.WriteLine(release.RESPONSE);
+                            probably++;
+                        }
+                        if (release.RESPONSE == "Definitely not")
+                        {
+                            Console.WriteLine(release.RESPONSE);
+                            definitely_not++;
+                        }
+                        if (release.RESPONSE == "Probably not")
+                        {
+                            Console.WriteLine(release.RESPONSE);
+                            Probably_not++;
+                        }
                     }
-                    if (release.RESPONSE == "Probably")
+                    
+                    object y = new StringBuilder(release.TABLE).ToString().Replace(" ", string.Empty);
+                    var result = "TABLEAD10:Doyoucurrentlysmoketobaccocigarettes?".Equals(y);
+                    
+                    if (result)
                     {
-                        Console.WriteLine(release.RESPONSE);
-                        i++;
+                        if (release.RESPONSE == "Yes")
+                        {
+                            Console.WriteLine("Is a smoker:" + release.RESPONSE);
+                            smoker++;
+                        } else
+                        {
+                            nonSmoker++;
+                        }
+
+                        if (release.RESPONSE == "Refused")
+                            {
+                                Console.WriteLine("Is a smoker:" + release.RESPONSE);
+                                smoker++;
+                            }
+                            else
+                            {
+                                nonSmoker++;
+                            }
                     }
+
+                        lines++;
                 }
-                Console.WriteLine(i);
-                Console.ReadLine();
+                Console.WriteLine(definitely);
+                Console.WriteLine(probably);
+                Console.WriteLine(definitely_not);
+                Console.WriteLine(Probably_not);
+                Console.WriteLine("Is a Smoker:" + smoker);
+                Console.WriteLine("Not a Smoker:" + nonSmoker);
+                Console.WriteLine(lines);
             }
             return releases;
         }
@@ -71,6 +124,8 @@ namespace ConsoleApp1
 
         public class toRelease
         {
+            [DeserializeAs(Name = "TABLE")]
+            public string TABLE { get; set; }
             [DeserializeAs(Name = "RESPONSE")]
             public string RESPONSE { get; set; }
         }
