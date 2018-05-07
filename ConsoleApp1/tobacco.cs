@@ -27,6 +27,7 @@ namespace ConsoleApp1
             int Probably_not = 0;
             int smoker = 0;
             int nonSmoker = 0;
+            int refused = 0;
             List<toRelease> releases = new List<toRelease>();
             //IRestResponse<List<Release> response = new IRestResponse<List<Release>();
 
@@ -90,12 +91,12 @@ namespace ConsoleApp1
 
                         if (release.RESPONSE == "Refused")
                             {
-                                Console.WriteLine("Is a smoker:" + release.RESPONSE);
-                                smoker++;
+                                Console.WriteLine("Refused:" + release.RESPONSE);
+                                refused++;
                             }
                             else
                             {
-                                nonSmoker++;
+                                
                             }
                     }
 
@@ -107,6 +108,7 @@ namespace ConsoleApp1
                 Console.WriteLine(Probably_not);
                 Console.WriteLine("Is a Smoker:" + smoker);
                 Console.WriteLine("Not a Smoker:" + nonSmoker);
+                Console.WriteLine("Refused:" + refused);
                 Console.WriteLine(lines);
             }
             return releases;
